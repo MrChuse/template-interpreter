@@ -4,7 +4,7 @@
 #include "brain.h"
 
 template<typename T>
-class Command: public Brain<T> {
+class Command {
 public:
 
 	int parameters_number;

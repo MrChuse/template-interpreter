@@ -7,7 +7,7 @@ template<typename T>
 class Interpreter : public Brain<T> {
 public:
 
-	Interpreter(const std::vector<int> memory, const std::vector<Command<T>> commands, const int max_value, const int limit)
+	Interpreter(const std::vector<int> memory, const std::vector<Command<T>> commands, const int max_value, const int limit){
 		this->memory = std::vector<int>(memory);
 		this->commands = std::vector<Command<T>>(commands);
 		this->limit = limit;
@@ -70,11 +70,18 @@ public:
 
 			}
 		}
+		return std::vector<int>{0};
 	}
 
-	void mutate() override;
+	void mutate() override {
+		for (int i = 0; i < memory.size(); i++){
+			increase_memory_at(i, 1);
+		}
+	}
 
-	bool check_ally(Brain<T>* other) override;
+	bool check_ally(Brain<T>* other) override {
+		return get_size() == other->get_size();
+	}
 
 	int get_size() override { return memory.size(); }
 
@@ -87,7 +94,7 @@ public:
 private:
 
 	std::vector<int> memory;
-	std::vector<Command> commands;
+	std::vector<Command<T>> commands;
 	int max_value;
 	int limit;
 
